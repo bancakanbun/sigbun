@@ -11,5 +11,8 @@
         	<a class="list-group-item list-group-item-info" href="<?php echo site_url('pelaporan/lahankebun');?>">
         		&raquo;&nbsp;Data lahan perkebunan
         	</a>
+            <a class="list-group-item" href="<?php echo site_url('pelaporan/pengamatanopt');?>">
+                &raquo;&nbsp;Rekapitulasi pengamatan organisme pengganggu tanaman
+            </a>
         </div>	
     </div>

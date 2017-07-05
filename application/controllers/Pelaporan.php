@@ -45,10 +45,19 @@ class Pelaporan extends CI_Controller {
 	}
 
 	public function lahankebun() {
-		$data = $this->InitiateTemplate(false,true,'pelaporan/LahanPerkebunan','','pelaporan/custom_js');
+		$data = $this->InitiateTemplate(false,true,'pelaporan/LahanPerkebunan','','pelaporan/LahanPerkebunan_js');
 
 		$this->load->model('Pelaporan_model'); 
 		$data['data'] = $this->Pelaporan_model->LahanPerkebunan();
+
+		$this->OpenView($data);
+	}
+
+	public function pengamatanopt() {
+		$data = $this->InitiateTemplate(false,true,'pelaporan/PengamatanOpt','','pelaporan/PengamatanOpt_js');
+
+		$this->load->model('Pelaporan_model'); 
+		$data['data'] = $this->Pelaporan_model->RekapPengamatanOpt();
 
 		$this->OpenView($data);
 	}

@@ -1,7 +1,7 @@
     <div class="container sigbun-container">
       <h2>Data lahan perkebunan</h2>
 
-      <table id="example" class="table table-striped table-bordered table-condensed" width="100%" cellspacing="0">
+      <table id="data" class="table table-striped table-bordered table-condensed" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th>Kode</th>
@@ -9,7 +9,7 @@
                 <th>Kec/desa</th>
                 <th>Kab/kota</th>
                 <th>Luas lahan (ha)</th>
-                <th>Harga panen</th>
+                <th>Harga panen (Rp)</th>
             </tr>
         </thead>
         <tbody>
