@@ -77,7 +77,7 @@
       <div class="collapse" id="leftmenu">
         <a <?php if($peta_active) { ?>class="active" <?php } ?>href="<?php echo site_url(); ?>">
           <span class="glyphicon glyphicon-globe" aria-hidden="true"></span><br>Peta</a>
-        <a <?php if($dashboard_active) { ?>class="active" <?php } ?>href="<?php echo site_url(); ?>">
+        <a <?php if($dashboard_active) { ?>class="active" <?php } ?>href="<?php echo site_url('dashboard'); ?>">
           <span class="glyphicon glyphicon-search" aria-hidden="true"></span><br>Dashboard</a>
         <a <?php if($pelaporan_active) { ?>class="active" <?php } ?>href="<?php echo site_url('pelaporan'); ?>">
           <span class="glyphicon glyphicon-stats" aria-hidden="true"></span><br>Pelaporan</a>

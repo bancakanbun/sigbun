@@ -5,6 +5,7 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
+		$data['active_menu'] = "dashboard";
 		$data['template'] = 'dashboard/Index';
 		$data['custom_js'] = 'dashboard/custom_js';
 		$data['load_chart'] = true;
