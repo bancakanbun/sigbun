@@ -1,3 +1,10 @@
+<?php
+  if(!isset($load_map)) $load_map=false;
+  if(!isset($load_datatable)) $load_datatable=false;
+  if(!isset($load_chart)) $load_chart=false;
+  if(!isset($custom_css)) $custom_css="";
+  if(!isset($custom_js)) $custom_js="";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,6 +23,10 @@
 
     <?php if($load_datatable) { ?>
     <link href="<?php echo base_url(); ?>libs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <?php } ?>
+
+    <?php if($load_chart) { ?>
+    <link href="<?php echo base_url(); ?>libs/css/highcharts.css" rel="stylesheet">
     <?php } ?>
 
     <?php if($custom_css!="") { $this->load->view($custom_css); } ?>
@@ -98,12 +109,21 @@
     <script src="<?php echo base_url(); ?>libs/js/dataTables.bootstrap.min.js"></script>
     <?php } ?>
 
+    <?php if($load_chart) { ?>
+    <script src="<?php echo base_url(); ?>libs/js/highcharts.js"></script>
+    <script src="<?php echo base_url(); ?>libs/js/modules/exporting.js"></script>
+    <?php } ?>
+
     <script type="text/javascript">
       $(document).ready(function(){
         $('#leftmenu').collapse('show');
       });
 
-      <?php if($custom_js!="") { $this->load->view($custom_js); } ?>
+      <?php 
+        if($custom_js!="") { 
+          $this->load->view($custom_js,isset($custom_js_data) ? $custom_js_data : null); 
+        } 
+      ?>
 
     </script>
 
