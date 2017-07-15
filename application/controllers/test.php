@@ -31,5 +31,24 @@ class Test extends CI_Controller {
         // echo $id[0]."-".$id[1];
         echo $id[0].$kodekota.str_pad($id[1]+1, 3, "0", STR_PAD_LEFT);
 	}
+
+	public function enkrip() {
+		$pass = 'perkebunan';
+		$strutf8 = utf8_encode($pass);
+		$strhash2 = hash('sha1',$strutf8,true);
+		$strpass = base64_encode($strhash2);
+
+		echo '<p>->'.$strutf8;
+		echo '<p>->'.$strhash2;
+		echo '<p>->'.$strpass;
+		// echo '<p>->'.hash('sha1',$strhash2,true);
+
+		// $pass2 = "3nAbpf46naBnx875Pt3Mx+th1no=";
+		// echo '<p>->'.$pass2;
+		// $strpass2 = base64_decode($pass2);
+		// echo '<p>->'.$strpass2;
+
+		//"jLIjfQZ5yojbZGTqxg2pY0VROWQ="
+	}
 } 
 ?>

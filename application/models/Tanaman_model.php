@@ -44,17 +44,14 @@ class Tanaman_model extends CI_Model {
 
     public function UpdateData($idtanaman,$namatanaman,$produktivitas) {
         $this->LoadDatabase();
-
         $data = array('nm_tanaman' => $namatanaman, 'produktivitas' => $produktivitas);
         $this->db->where('id_tanaman',$idtanaman);
         $this->db->update('m_tanaman', $data);
-
         $this->CloseDatabase();
     }
 
     public function DeleteData($idtanaman) {
         $this->LoadDatabase();
-
         $this->db->where('id_tanaman',$idtanaman);
         $this->db->delete('m_tanaman');
         $this->CloseDatabase();

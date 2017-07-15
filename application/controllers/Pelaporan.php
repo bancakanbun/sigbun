@@ -26,7 +26,7 @@ class Pelaporan extends CI_Controller {
 
 	public function komoditi()
 	{
-		$data = $this->InitiateTemplate(false,true,'pelaporan/Komoditi','','pelaporan/custom_js');
+		$data = $this->InitiateTemplate(false,true,'pelaporan/Komoditi','','pelaporan/Komoditi_js');
 
 		$this->load->model('Pelaporan_model'); 
 		$data['data'] = $this->Pelaporan_model->DaftarKomoditi();
@@ -36,7 +36,7 @@ class Pelaporan extends CI_Controller {
 
 	public function opt()
 	{
-		$data = $this->InitiateTemplate(false,true,'pelaporan/Opt','','pelaporan/custom_js');
+		$data = $this->InitiateTemplate(false,true,'pelaporan/Opt','','pelaporan/Opt_js');
 
 		$this->load->model('Pelaporan_model'); 
 		$data['data'] = $this->Pelaporan_model->Opt();

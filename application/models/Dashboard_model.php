@@ -52,7 +52,6 @@ class Dashboard_model extends CI_Model {
         $sql .= "order by a.nm_tanaman,a.nm_kota ";
 
         $query = $this->db->query($sql);
-
         $this->CloseDatabase();
 
         return $query;
@@ -81,7 +80,6 @@ class Dashboard_model extends CI_Model {
         $sql .= "order by a.nm_tanaman,a.nm_kota ";
 
         $query = $this->db->query($sql);
-
         $this->CloseDatabase();
 
         return $query;

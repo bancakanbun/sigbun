@@ -51,7 +51,6 @@ class Desa_model extends CI_Model {
         $kodedesa = $this->GetNewId($kodekota);
 
         $this->LoadDatabase();
-
         $data = array('id_desa' => $kodedesa, 'nm_desa' => $namadesa, 'id_kota' => $kodekota, 'imagedesa' => '');
         $this->db->insert('m_desa', $data);
         $this->CloseDatabase();
@@ -59,17 +58,14 @@ class Desa_model extends CI_Model {
 
     public function UpdateData($kodedesa,$namadesa,$kodekota) {
         $this->LoadDatabase();
-
         $data = array('id_kota' => $kodekota, 'nm_desa' => $namadesa);
         $this->db->where('id_desa',$kodedesa);
         $this->db->update('m_desa', $data);
-
         $this->CloseDatabase();
     }
 
     public function DeleteData($kodedesa) {
         $this->LoadDatabase();
-
         $this->db->where('id_desa',$kodedesa);
         $this->db->delete('m_desa');
         $this->CloseDatabase();

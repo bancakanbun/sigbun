@@ -46,7 +46,6 @@ class Wilayah_model extends CI_Model {
         $kodewilayah = $this->GetNewId($kodedesa);
 
         $this->LoadDatabase();
-
         $data = array('id_wilayah' => $kodewilayah, 'id_desa' => $kodedesa, 'id_tanaman' => $kodetanaman
                     , 'luasdaerah' => $luas, 'harga' => $harga);
         $this->db->insert('m_wilayah', $data);
@@ -55,17 +54,14 @@ class Wilayah_model extends CI_Model {
 
     public function UpdateData($kodewilayah,$kodedesa,$kodetanaman,$luas,$harga) {
         $this->LoadDatabase();
-
         $data = array('id_desa' => $kodedesa, 'id_tanaman' => $kodetanaman, 'luasdaerah' => $luas, 'harga' => $harga);
         $this->db->where('id_wilayah',$kodewilayah);
         $this->db->update('m_wilayah', $data);
-
         $this->CloseDatabase();
     }
 
     public function DeleteData($kodewilayah) {
         $this->LoadDatabase();
-
         $this->db->where('id_wilayah',$kodewilayah);
         $this->db->delete('m_wilayah');
         $this->CloseDatabase();

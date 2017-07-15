@@ -5,12 +5,11 @@ class Kota extends CI_Controller {
 
 	public function Save()
 	{
-		$this->load->model('Kota_model'); 
-
 		$kode_kota = $this->input->post("kodekota");
 		$nama_kota = $this->input->post("namakota");
 		$mode = $this->input->post("editmode");
 
+		$this->load->model('Kota_model'); 
 		if($mode=="edit")
 		{
 			$kode_lama = $this->input->post("kodelama");
@@ -22,11 +21,10 @@ class Kota extends CI_Controller {
 	}
 
 	public function Delete() {
-		$this->load->model('Kota_model'); 
-
 		$kode_kota = $this->input->post("kodekota");
 		$nama_kota = $this->input->post("namakota");
 
+		$this->load->model('Kota_model'); 
 		$this->Kota_model->DeleteData($kode_kota,$nama_kota);
 	}
 

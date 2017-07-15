@@ -23,7 +23,6 @@ class Kota_model extends CI_Model {
 
     public function NewData($kodekota,$namakota) {
         $this->LoadDatabase();
-
         $data = array('id_kota' => $kodekota, 'nm_kota' => $namakota);
         $this->db->insert('m_kota', $data);
         $this->CloseDatabase();
@@ -31,18 +30,15 @@ class Kota_model extends CI_Model {
 
     public function UpdateData($kodekota,$namakota,$kodelama,$namalama) {
         $this->LoadDatabase();
-
         $data = array('id_kota' => $kodekota, 'nm_kota' => $namakota);
         $this->db->where('id_kota',$kodelama);
         $this->db->where('nm_kota',$namalama);
         $this->db->update('m_kota', $data);
-
         $this->CloseDatabase();
     }
 
     public function DeleteData($kodekota,$namakota) {
         $this->LoadDatabase();
-
         $this->db->where('id_kota',$kodekota);
         $this->db->where('nm_kota',$namakota);
         $this->db->delete('m_kota');

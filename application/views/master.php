@@ -75,13 +75,13 @@
         $update_active = ($active_menu=="update");
       ?>
       <div class="collapse" id="leftmenu">
-        <a <?php if($peta_active) { ?>class="active" <?php } ?>href="<?php echo site_url(); ?>">
+        <a <?php if($peta_active) { ?>class="active" <?php } ?>href="<?php echo site_url('peta'); ?>">
           <span class="glyphicon glyphicon-globe" aria-hidden="true"></span><br>Peta</a>
         <a <?php if($dashboard_active) { ?>class="active" <?php } ?>href="<?php echo site_url('dashboard'); ?>">
           <span class="glyphicon glyphicon-search" aria-hidden="true"></span><br>Dashboard</a>
         <a <?php if($pelaporan_active) { ?>class="active" <?php } ?>href="<?php echo site_url('pelaporan'); ?>">
           <span class="glyphicon glyphicon-stats" aria-hidden="true"></span><br>Pelaporan</a>
-        <a <?php if($admin_active) { ?>class="active" <?php } ?>href="<?php echo site_url(); ?>">
+        <a <?php if($admin_active) { ?>class="active" <?php } ?>href="<?php echo site_url('administrasi'); ?>">
           <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><br>Administrasi</a>
         <a <?php if($update_active) { ?>class="active" <?php } ?>href="<?php echo site_url('edit'); ?>">
           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><br>Update data</a>

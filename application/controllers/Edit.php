@@ -73,8 +73,6 @@ class Edit extends CI_Controller {
 		$data['data'] = $this->Wilayah_model->LoadAll();
 		$this->load->model('Kota_model'); 
 		$data['kota'] = $this->Kota_model->LoadAll();
-		// $this->load->model('Desa_model'); 
-		// $data['desa'] = $this->Desa_model->LoadAll();
 		$this->load->model('Tanaman_model'); 
 		$data['komoditi'] = $this->Tanaman_model->LoadAll();
 

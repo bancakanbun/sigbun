@@ -5,8 +5,6 @@ class Opt extends CI_Controller {
 
 	public function Save()
 	{
-		$this->load->model('Opt_model'); 
-
 		$kodeopt = $this->input->post("kodeopt");
 		$namaopt = $this->input->post("namaopt");
 		$namalatin = $this->input->post("namalatin");
@@ -14,6 +12,7 @@ class Opt extends CI_Controller {
 		$idtanaman = $this->input->post("idtanaman");
 		$mode = $this->input->post("editmode");
 
+		$this->load->model('Opt_model'); 
 		if($mode=="edit")
 			$this->Opt_model->UpdateData($kodeopt,$namaopt,$namalatin,$persen,$idtanaman);
 		else
@@ -21,10 +20,9 @@ class Opt extends CI_Controller {
 	}
 
 	public function Delete() {
-		$this->load->model('Opt_model'); 
-
 		$kodeopt = $this->input->post("kodeopt");
 
+		$this->load->model('Opt_model'); 
 		$this->Opt_model->DeleteData($kodeopt);
 	}
 

@@ -23,7 +23,6 @@ class Tahun_model extends CI_Model {
 
     public function NewData($namatahun) {
         $this->LoadDatabase();
-
         $data = array('nm_tahun' => $namatahun);
         $this->db->insert('m_tahun', $data);
         $this->CloseDatabase();
@@ -31,17 +30,14 @@ class Tahun_model extends CI_Model {
 
     public function UpdateData($kodetahun,$namatahun) {
         $this->LoadDatabase();
-
         $data = array('nm_tahun' => $namatahun);
         $this->db->where('id_tahun',$kodetahun);
         $this->db->update('m_tahun', $data);
-
         $this->CloseDatabase();
     }
 
     public function DeleteData($kodetahun) {
         $this->LoadDatabase();
-
         $this->db->where('id_tahun',$kodetahun);
         $this->db->delete('m_tahun');
         $this->CloseDatabase();

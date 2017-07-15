@@ -68,20 +68,22 @@
                 <?php } ?>
             </select>
           </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label">Kota:</label>
-            <select class="form-control" id="kota">
-                <option value="">[ Pilih Kota ]</option>
-                <?php foreach ($kota->result() as $row) { ?>
-                <option value="<?php echo $row->id_kota; ?>"><?php echo $row->nm_kota; ?></option>
-                <?php } ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label">Desa:</label>
-            <select class="form-control" id="desa">
-                <option value="">[ Pilih Desa ]</option>
-            </select>
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="message-text" class="control-label">Kota:</label>
+              <select class="form-control" id="kota">
+                  <option value="">[ Pilih Kota ]</option>
+                  <?php foreach ($kota->result() as $row) { ?>
+                  <option value="<?php echo $row->id_kota; ?>"><?php echo $row->nm_kota; ?></option>
+                  <?php } ?>
+              </select>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="message-text" class="control-label">Desa:</label>
+              <select class="form-control" id="desa">
+                  <option value="">[ Pilih Desa ]</option>
+              </select>
+            </div>
           </div>
           <div class="row">
               <div class="form-group col-md-6 col-sm-12">

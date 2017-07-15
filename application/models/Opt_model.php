@@ -40,7 +40,6 @@ class Opt_model extends CI_Model {
         $kodeopt = $this->GetNewId();
 
         $this->LoadDatabase();
-
         $data = array('id_opt' => $kodeopt, 'id_tanaman' => $idtanaman
                         , 'nm_opt' => $namaopt, 'nm_latinopt' => $namalatin, 'persentase_hilang' => $persentase);
         $this->db->insert('m_opt', $data);
@@ -49,18 +48,15 @@ class Opt_model extends CI_Model {
 
     public function UpdateData($kodeopt,$namaopt,$namalatin,$persentase,$idtanaman) {
         $this->LoadDatabase();
-
         $data = array('id_tanaman' => $idtanaman, 'nm_opt' => $namaopt
                     , 'nm_latinopt' => $namalatin, 'persentase_hilang' => $persentase);
         $this->db->where('id_opt',$kodeopt);
         $this->db->update('m_opt', $data);
-
         $this->CloseDatabase();
     }
 
     public function DeleteData($kodeopt) {
         $this->LoadDatabase();
-
         $this->db->where('id_opt',$kodeopt);
         $this->db->delete('m_opt');
         $this->CloseDatabase();
