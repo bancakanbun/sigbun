@@ -61,5 +61,14 @@ class Pelaporan extends CI_Controller {
 
 		$this->OpenView($data);
 	}
+
+	public function seranganopt() {
+		$data = $this->InitiateTemplate(false,true,'pelaporan/SeranganOpt','','pelaporan/SeranganOpt_js');
+
+		$this->load->model('Pelaporan_model'); 
+		$data['data'] = $this->Pelaporan_model->RekapPengamatanOpt();
+
+		$this->OpenView($data);
+	}
 	
 }

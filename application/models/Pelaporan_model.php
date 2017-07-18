@@ -48,8 +48,12 @@ class Pelaporan_model extends CI_Model {
     }
 
     public function RekapPengamatanOpt() {
+        $strfield = "";
+        $strfield .= "p_info.idinfo,cast(tanggal as date) as tanggal,nm_tahun,triwulan,nm_kota,nm_desa";
+        $strfield .= ",nm_tanaman,nm_opt,p_info.hargapanen,p_info.luasdaerah,total_rugi";
+        $strfield .= ",Ringan,Sedang,Berat";
         $this->LoadDatabase();
-        $this->db->select('p_info.idinfo,cast(tanggal as date) as tanggal,nm_tahun,triwulan,nm_kota,nm_desa,nm_tanaman,nm_opt,p_info.hargapanen,p_info.luasdaerah,total_rugi');
+        $this->db->select($strfield);
         $this->db->from(' p_info');
         $this->db->join('m_tahun', 'p_info.id_tahun = m_tahun.id_tahun', 'left');
         $this->db->join('m_wilayah', 'p_info.id_wilayah = m_wilayah.id_wilayah', 'left');

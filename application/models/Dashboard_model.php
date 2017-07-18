@@ -15,6 +15,7 @@ class Dashboard_model extends CI_Model {
 
     public function DaftarTahun() {
         $this->LoadDatabase();
+        $this->db->order_by('nm_tahun', 'ASC');
         $query = $this->db->get('m_tahun');
         $this->CloseDatabase();
 
@@ -27,6 +28,17 @@ class Dashboard_model extends CI_Model {
         $this->CloseDatabase();
 
         return $query;
+    }
+
+    public function GetMaxTahunOptData() {
+        $this->LoadDatabase();
+        $this->db->select_max('nm_tahun');
+        $this->db->where('id_tahun in (select distinct id_tahun from p_info)');
+        $query = $this->db->get('m_tahun');
+        $this->CloseDatabase();
+
+        $row = $query->row();
+        return $row->nm_tahun;
     }
 
     public function SeranganOpt($tahun) {

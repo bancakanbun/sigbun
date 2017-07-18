@@ -1,9 +1,70 @@
+var maxtahun = "<?php echo $max_tahun; ?>";
+var kota = [<?php foreach ($kota->result() as $row) { echo "'".$row->nm_kota."',"; } ?>];
+
+function GenerateSeriesData(source,name_field,data_field)
+{
+    var key = "";
+    var data = [];
+    var target = [];
+
+    jQuery.each(source, function(i, val) {
+        if(key!=val[name_field] && key != "") {
+            tmp = {name: key, data: data};
+            target.push(tmp);
+            data = [];
+        }
+
+        key = val[name_field];
+        data.push((val[data_field]!=0)?parseInt(val[data_field]):null);
+    });
+
+    return target;
+}
+
+function TahunChange() {
+    var id = $(this).attr("id");
+    var tahun = $(this).val();
+    var url = "";
+    var target = "";
+    var name_field = "";
+    var data_field = "";
+
+    if (id=="tahun1") {
+        url = "<?php echo site_url('dashboard/getseranganoptluas'); ?>/" + tahun;
+        target = "dashboard01";
+        name_field = "nm_tanaman";
+        data_field = "luasdaerah";
+    }
+    if (id=="tahun2") {
+        url = "<?php echo site_url('dashboard/getseranganoptrugi'); ?>/" + tahun;
+        target = "dashboard02";
+        name_field = "nm_tanaman";
+        data_field = "total_rugi";
+    }
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (msg) {
+            var data = GenerateSeriesData($.parseJSON(msg),name_field,data_field);
+            var chart = $('#' + target).highcharts();
+
+            if(chart.series.length > 0) while(chart.series.length > 0) chart.series[0].remove(true);
+
+            jQuery.each(data, function(i, val) { chart.addSeries(val,false); });
+            chart.redraw();
+        },
+        error: function (xhr, status, error) {
+            alert("Error while loading data!");
+            console.log(error);
+        }
+    });
+}
+
 Highcharts.chart('dashboard01', {
     chart: { type: 'column' },
-    title: { text: 'Jumlah serangan organisme penggangu tanaman' },
-    xAxis: {
-        categories: [<?php foreach ($kota->result() as $row) { echo "'".$row->nm_kota."',"; } ?>]
-    },
+    title: { text: '' },
+    xAxis: { categories: kota },
     yAxis: {
         min: 0,
         title: { text: 'Luas daerah (ha)' },
@@ -37,29 +98,14 @@ Highcharts.chart('dashboard01', {
                 color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
             }
         }
-    },
-<?php
-	$kom = "";
-	echo "series: [";
-	foreach ($content->result() as $row) 
-	{
-		if ($kom != $row->nm_tanaman) {
-			if ($kom!="") echo "]}, ";
-			echo "{ name: '".$row->nm_tanaman."', data: [";
-			$kom = $row->nm_tanaman;
-		}
-		echo (($row->luasdaerah == 0) ? "null" : $row->luasdaerah).",";
-	}
-	echo "]}]";
-?>
+    }
+    ,series: []
 });
 
 Highcharts.chart('dashboard02', {
     chart: { type: 'column' },
-    title: { text: 'Jumlah kerugian (rupiah) akibat organisme penggangu tanaman' },
-    xAxis: {
-        categories: [<?php foreach ($kota->result() as $row) { echo "'".$row->nm_kota."',"; } ?>]
-    },
+    title: { text: '' },
+    xAxis: { categories: kota },
     yAxis: {
         min: 0,
         title: { text: 'Total rugi (Rp)' },
@@ -93,19 +139,13 @@ Highcharts.chart('dashboard02', {
                 color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
             }
         }
-    },
-<?php
-	$kom = "";
-	echo "series: [";
-	foreach ($content2->result() as $row) 
-	{
-		if ($kom != $row->nm_tanaman) {
-			if ($kom!="") echo "]}, ";
-			echo "{ name: '".$row->nm_tanaman."', data: [";
-			$kom = $row->nm_tanaman;
-		}
-		echo (($row->total_rugi == 0) ? "null" : $row->total_rugi).",";
-	}
-	echo "]}]";
-?>
+    }
+    ,series: []
+});
+
+$(document).ready(function(){
+    $( "#tahun1" ).change(TahunChange);
+    $( "#tahun1" ).val(maxtahun).change();
+    $( "#tahun2" ).change(TahunChange);
+    $( "#tahun2" ).val(maxtahun).change();
 });
