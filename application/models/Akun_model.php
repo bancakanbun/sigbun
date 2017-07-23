@@ -53,5 +53,17 @@ class Akun_model extends CI_Model {
         $this->CloseDatabase();
     }
 
+    public function GetUser($username,$password) {
+        $this->LoadDatabase();
+        $this->db->select('id,name,username,type,m_user.id_kota,nm_kota');
+        $this->db->from('m_user');
+        $this->db->join('m_kota', 'm_user.id_kota = m_kota.id_kota', 'left');
+        $this->db->where('username',$username);
+        $this->db->where('Pass',$this->EncryptPassword($password));
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
 } 
 ?> 

@@ -27,4 +27,34 @@ class Akun extends CI_Controller {
 		$this->Akun_model->DeleteData($kode);
 	}
 
+	public function Login() {
+		$data['show_left_menu'] = false;
+		$data['template'] = 'administrasi/login';
+		$data['custom_css'] = '';
+		$data['custom_js'] = 'administrasi/login_js';
+
+		$this->load->view('master',$data);		
+	}
+
+	public function DoLogin() {
+		$username = $this->input->post("username");
+		$password = $this->input->post("password");
+
+		$this->load->model('Akun_model');
+
+		$row =  $this->Akun_model->GetUser($username,$password);
+
+		if (count($row)==0) echo("ERROR");
+		else if (count($row)==1) {
+			$user = array( "username"=>$row->username,"name"=>$row->name,"type"=>$row->type,"kota"=>$row->nm_kota);
+			$this->session->set_userdata("userinfo",$user);
+			echo("SUCCESS");
+		}
+	}
+
+	public function Logout() {
+		$this->session->unset_userdata('userinfo');
+		redirect('akun/login');
+	}
+
 }

@@ -50,5 +50,46 @@ class Test extends CI_Controller {
 
 		//"jLIjfQZ5yojbZGTqxg2pY0VROWQ="
 	}
+
+	public function json() {
+		$data = array();
+		$kota = array();
+		$status = array();
+		$komoditi = array();
+
+		$this->json_helper($data,$kota,$status,$komoditi);
+		//foreach($kota as $k) echo $k;
+		//print_r($data);
+		//echo "->ada: ".isset($data['Sawit']['aktif'])."<br>tidak ada: ".isset($data['Sawit']['dodol']);
+		echo "<p>-> sawit aktif: ".( isset($data['Sawit']['aktif']) ? "ada" : "tidak ada");
+		echo "<p>-> sawit dodol: ".( isset($data['Sawit']['dodol']) ? "ada" : "tidak ada");
+
+	}
+
+	private function json_helper(&$data,&$kota,&$status,&$komoditi) {
+		$url = "http://103.253.107.103:8088/geoserver/disbun/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=disbun:ZD_IjinUsahaPerkebunan_AR&outputformat=json";
+		$json = file_get_contents($url);
+		$obj = json_decode($json);
+		
+		$chart3 = array();
+		$chart4 = array();
+
+		foreach($obj->features as $item) {
+			$namakota = $item->properties->wadmkk;
+			$kota[$namakota] = true;
+
+			$strStatus = $item->properties->statussk;
+			if(is_null($strStatus)) $strStatus = "Tidak ada status";
+			$status[$strStatus] = true;
+
+			$namakomoditi = $item->properties->jnskbn;
+			$komoditi[$namakomoditi] = true;
+
+			$data[$namakomoditi][$strStatus] = 1;
+		}
+		$kota = array_keys($kota);
+		$status = array_keys($status);
+		$komoditi = array_keys($komoditi);
+	}
 } 
 ?>

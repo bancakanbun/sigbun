@@ -14,6 +14,10 @@ class Pelaporan extends CI_Controller {
 		return $data;	
 	}
 
+	private function CheckUserAccess() {
+		if( !CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { redirect('home/unauthorized'); }
+	}
+
 	private function OpenView($data) {
 		$this->load->view('master',$data);
 	}
@@ -45,6 +49,7 @@ class Pelaporan extends CI_Controller {
 	}
 
 	public function lahankebun() {
+		$this->CheckUserAccess();
 		$data = $this->InitiateTemplate(false,true,'pelaporan/LahanPerkebunan','','pelaporan/LahanPerkebunan_js');
 
 		$this->load->model('Pelaporan_model'); 
@@ -63,10 +68,31 @@ class Pelaporan extends CI_Controller {
 	}
 
 	public function seranganopt() {
+		$this->CheckUserAccess();
 		$data = $this->InitiateTemplate(false,true,'pelaporan/SeranganOpt','','pelaporan/SeranganOpt_js');
 
 		$this->load->model('Pelaporan_model'); 
 		$data['data'] = $this->Pelaporan_model->RekapPengamatanOpt();
+
+		$this->OpenView($data);
+	}
+
+	public function iup() {
+		$this->CheckUserAccess();
+		$this->load->model('Admin_model'); 
+		$url = $this->Admin_model->LoadWfs();
+		// $url = "http://103.253.107.103:8088/geoserver/disbun/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=disbun:ZD_IjinUsahaPerkebunan_AR&outputformat=json";
+		$json = file_get_contents($url);
+
+		$obj = json_decode($json);
+		
+		$iup_data = array();
+		foreach($obj->features as $item) { $iup_data[] = $item->properties; }
+
+		$data = $this->InitiateTemplate(false,true,'pelaporan/Iup','','pelaporan/Iup_js');
+
+		$this->load->model('Pelaporan_model'); 
+		$data['data'] = $iup_data;
 
 		$this->OpenView($data);
 	}

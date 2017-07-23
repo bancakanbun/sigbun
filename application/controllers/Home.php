@@ -12,4 +12,14 @@ class Home extends CI_Controller {
 		$data['custom_js'] = 'home/home_custom_js';
 		$this->load->view('master',$data);
 	}
+
+	public function unauthorized()
+	{
+		$data['show_left_menu'] = false;
+		$data['template'] = 'home/unauthorize';
+		$data['custom_css'] = '';
+		$data['custom_js'] = '';
+
+		$this->load->view('master',$data);		
+	}
 }

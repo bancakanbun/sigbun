@@ -4,6 +4,7 @@
   if(!isset($load_chart)) $load_chart=false;
   if(!isset($custom_css)) $custom_css="";
   if(!isset($custom_js)) $custom_js="";
+  if(!isset($show_left_menu)) $show_left_menu=true; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +16,7 @@
     <title>Sistem Informasi Geospasial Dinas Perkebunan - Kalimantan Timur</title>
 
     <link href="<?php echo base_url(); ?>libs/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>libs/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>libs/css/sigbun.css" rel="stylesheet">
 
     <?php if($load_map) { ?>
@@ -39,6 +41,9 @@
     <![endif]-->
   </head>
   <body>
+    <?php
+      $user = $this->session->userdata("userinfo");
+    ?>
     <nav class="navbar navbar-default navbar-static-top sigbun-navbar">
       <div class="container-fluid">
         <div class="navbar-header sigbun-navbar-header">
@@ -52,8 +57,13 @@
                 <a href="#">Bantuan</a>
               </div>
               <div class="sigbun-navbar-menu-right">
+                <?php if(!$user) { ?>
                 <a href="#">Registrasi</a> | 
-                <a href="#">Login</a>
+                <a href="<?php echo site_url('akun/login'); ?>">Login</a>
+                <?php } else { ?>
+                Selamat datang, <?php echo $user["name"]; ?> | 
+                <a href="<?php echo site_url('akun/logout'); ?>">Logout</a>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -61,6 +71,7 @@
       </div>
     </nav>
 
+    <?php if($show_left_menu) { ?>
     <div class="sigbun-left-menu">
       <button class="btn btn-info btn-block" type="button" data-toggle="collapse" data-target="#leftmenu" aria-expanded="false" aria-controls="leftmenu">
         MENU <span class="caret"></span>
@@ -81,12 +92,19 @@
           <span class="glyphicon glyphicon-search" aria-hidden="true"></span><br>Dashboard</a>
         <a <?php if($pelaporan_active) { ?>class="active" <?php } ?>href="<?php echo site_url('pelaporan'); ?>">
           <span class="glyphicon glyphicon-stats" aria-hidden="true"></span><br>Pelaporan</a>
+
+        <?php if( CheckAksesGroup(["Administrator"]) ) { ?>
         <a <?php if($admin_active) { ?>class="active" <?php } ?>href="<?php echo site_url('administrasi'); ?>">
           <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><br>Administrasi</a>
+        <?php } ?>
+        
+        <?php if( CheckAksesGroup(["Administrator","Operator"]) ) { ?>
         <a <?php if($update_active) { ?>class="active" <?php } ?>href="<?php echo site_url('edit'); ?>">
           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><br>Update data</a>
+        <?php } ?>
       </div>          
     </div>
+    <?php } ?>
 
     <?php 
       if($template!="") { 
@@ -98,7 +116,9 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="<?php echo base_url(); ?>libs/js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="<?php echo base_url(); ?>libs/js/moment.min.js"></script>
     <script src="<?php echo base_url(); ?>libs/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>libs/js/bootstrap-datetimepicker.min.js"></script>
 
     <?php if($load_map) { ?>
     <script src="<?php echo base_url(); ?>libs/js/leaflet.js"></script>

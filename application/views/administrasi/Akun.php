@@ -1,5 +1,5 @@
 <div class="container sigbun-container">
-    <h2>Daftar Kecamatan/Desa</h2>
+    <h2>Daftar User</h2>
 
     <table id="data" class="table table-striped table-bordered table-condensed" width="100%" cellspacing="0">
         <thead>
@@ -70,7 +70,10 @@
               <select class="form-control" id="level">
                   <option value="">[ Pilih Level ]</option>
                   <option value="Administrator">Administrator</option>
-                  <option value="Operator">Operator</option>
+                  <option value="Operator">Data Editor</option>
+                  <option value="Eksekutif">Eksekutif</option>
+                  <option value="Lapangan">Petugas Lapangan</option>
+                  <option value="Eksternal">Petugas Eksternal</option>
               </select>
             </div>
             <div class="form-group col-md-6 col-sm-12">

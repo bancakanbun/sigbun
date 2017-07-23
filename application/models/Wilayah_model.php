@@ -67,5 +67,62 @@ class Wilayah_model extends CI_Model {
         $this->CloseDatabase();
     }
 
+    public function GetKomoditi() {
+        $strWhere = "";
+        $strWhere .= "id_tanaman in (select distinct id_tanaman from m_wilayah)";
+
+        $this->LoadDatabase();
+        $this->db->select('id_tanaman,nm_tanaman,produktivitas');
+        $this->db->from('m_tanaman');
+        $this->db->where($strWhere);
+        $query = $this->db->get();
+        $this->CloseDatabase();
+
+        return $query;
+    }
+
+    public function GetKotaByKomoditi($komoditi) {
+        $strWhere = "";
+        $strWhere .= "id_kota in (select distinct id_kota from m_wilayah ";
+        $strWhere .= "inner join m_desa on m_wilayah.id_desa = m_desa.id_desa ";
+        $strWhere .= "where id_tanaman='".$komoditi."')";
+
+        $this->LoadDatabase();
+        $this->db->select('id_kota,nm_kota');
+        $this->db->from('m_kota');
+        $this->db->where($strWhere);
+        $query = $this->db->get();
+        $this->CloseDatabase();
+
+        return $query;
+    }
+
+    public function GetDesaByKomoditiAndKota($komoditi,$kota) {
+        $strWhere = "";
+        $strWhere .= "id_desa in (select distinct id_desa from m_wilayah ";
+        $strWhere .= "where id_tanaman='".$komoditi."' and id_kota='".$kota."' )";
+
+        $this->LoadDatabase();
+        $this->db->select('id_desa,nm_desa');
+        $this->db->from('m_desa');
+        $this->db->where($strWhere);
+        $query = $this->db->get();
+        $this->CloseDatabase();
+
+        return $query;
+    }
+
+    public function GetWilayah($komoditi,$desa) {
+        $this->LoadDatabase();
+        $this->db->select('id_wilayah,id_tanaman,id_desa,luasdaerah,harga');
+        $this->db->from('m_wilayah');
+        $this->db->where('id_tanaman',$komoditi);
+        $this->db->where('id_desa',$desa);
+        $query = $this->db->get();
+        $this->CloseDatabase();
+
+        return $query;
+    }
+
 } 
 ?> 

@@ -26,4 +26,18 @@ class Opt extends CI_Controller {
 		$this->Opt_model->DeleteData($kodeopt);
 	}
 
+	public function GetByTanaman($tanaman) {
+		$this->load->model('Opt_model'); 
+		$data = $this->Opt_model->GetByTanaman($tanaman);
+		$data = json_encode($data->result());
+		echo $data;
+	}
+
+	public function GetDetail($kodeopt) {
+		$this->load->model('Opt_model'); 
+		$data = $this->Opt_model->LoadDetail($kodeopt);
+		$data = json_encode($data->result());
+		echo $data;
+	}
+
 }

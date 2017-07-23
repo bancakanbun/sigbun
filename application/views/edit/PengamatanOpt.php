@@ -1,5 +1,5 @@
     <div class="container sigbun-container">
-      <h2>Rekapitulasi pengamatan organisme pengganggu tanaman</h2>
+      <h2>Pengamatan organisme pengganggu tanaman</h2>
 
       <table id="data" class="table table-striped table-bordered table-condensed" width="100%" cellspacing="0">
         <thead>
@@ -15,6 +15,7 @@
                 <th>Harga panen (Rp)</th>
                 <th>Luas lahan (ha)</th>
                 <th>Total rugi (Rp)</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tfoot>
@@ -30,6 +31,7 @@
                 <th>Harga panen (Rp)</th>
                 <th>Luas lahan (ha)</th>
                 <th>Total rugi (Rp)</th>
+                <th>&nbsp;</th>
             </tr>
         </tfoot>
         <tbody>
@@ -47,9 +49,21 @@
                 echo '<td>'.$row->hargapanen.'</td>';
                 echo '<td>'.$row->luasdaerah.'</td>';
                 echo '<td>'.$row->total_rugi.'</td>';
+                echo '<td>
+                    <button type="button" class="btn btn-default btn-xs btnEdit" data-kode="'.$row->idinfo.'">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs btnDelete" data-kode="'.$row->idinfo.'">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </td>';
                 echo '</tr>';
             }
         ?>
         </tbody>
     </table>
-    </div>
+
+    <a class="btn btn-primary btn-lg" role="button" href="<?php echo site_url('edit/pengamatan/tambah'); ?>">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah data
+    </a>
+</div>

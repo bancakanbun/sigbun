@@ -62,5 +62,24 @@ class Opt_model extends CI_Model {
         $this->CloseDatabase();
     }
 
+    public function GetByTanaman($tanaman) {
+        $this->LoadDatabase();
+        $this->db->select('id_opt,id_tanaman,nm_opt,nm_latinopt,persentase_hilang');
+        $this->db->from('m_opt');
+        $this->db->where("id_tanaman='".$tanaman."'");
+        $query = $this->db->get();
+        $this->CloseDatabase();
+
+        return $query;
+    }
+
+    public function LoadDetail($kodeopt) {
+        $this->LoadDatabase();
+        $this->db->where('id_opt',$kodeopt);
+        $query = $this->db->get('m_top');
+        $this->CloseDatabase();
+
+        return $query;
+    }
 } 
 ?> 

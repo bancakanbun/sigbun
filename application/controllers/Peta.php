@@ -10,6 +10,7 @@ class Peta extends CI_Controller {
 		$data['template'] = 'peta/Index';
 		$data['custom_css'] = 'peta/custom_css';
 		$data['custom_js'] = 'peta/custom_js';
+		$data['active_menu'] = "peta";
 		$this->load->view('master',$data);
 	}
 }

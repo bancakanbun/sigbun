@@ -15,6 +15,7 @@ class Tahun_model extends CI_Model {
 
     public function LoadAll() {
         $this->LoadDatabase();
+        $this->db->order_by('nm_tahun');
         $query = $this->db->get('m_tahun');
         $this->CloseDatabase();
 

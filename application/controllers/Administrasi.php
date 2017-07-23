@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Administrasi extends CI_Controller {
 
+    function __construct() { 
+        parent::__construct(); 
+        $this->CheckUserAccess();
+    }
+    
 	private function InitiateTemplate($load_map,$load_datatable,$template_path,$custom_css_path,$custom_js_path) {
 		$data['load_map'] = $load_map;
 		$data['load_datatable'] = $load_datatable;
@@ -18,8 +23,13 @@ class Administrasi extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
+	private function CheckUserAccess() {
+		if(!CheckAkses("Administrator")) { redirect('home/unauthorized'); }
+	}
+
 	public function index()
 	{
+		//$this->CheckUserAccess();
 		$data = $this->InitiateTemplate(false,false,'administrasi/Index','','');
 		$this->OpenView($data);
 	}
@@ -34,5 +44,19 @@ class Administrasi extends CI_Controller {
 		$data['data'] = $this->Akun_model->LoadAll();
 
 		$this->OpenView($data);
+	}
+
+	public function wfs() {
+		$data = $this->InitiateTemplate(false,false,'administrasi/wfs','','administrasi/wfs_js');
+		$this->load->model('Admin_model'); 
+		$data['url'] = $this->Admin_model->LoadWfs();
+		$this->OpenView($data);		
+	}
+
+	public function savewfs() {
+		$url = $this->input->post("url");
+
+		$this->load->model('Admin_model'); 
+		$this->Admin_model->SaveWfs($url);
 	}
 }

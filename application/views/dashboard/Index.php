@@ -18,6 +18,7 @@
 	        </div>
 		</div>
 
+		<?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 		        <form class="form-inline">
@@ -34,5 +35,30 @@
 	            <div class="col-xs-12 sigbun-chart-container sigbun-chart-container1" id="dashboard02"></div>
 	        </div>
 		</div>
+		<?php } ?>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		        <form class="form-inline">
+					<label for="tahun1" style="font-size: large;">Luas daerah IUP berdasarkan Kota/Kabupaten</label>
+		    	</form>
+			</div>
+	        <div class="row">
+	            <div class="col-xs-12 sigbun-chart-container sigbun-chart-container1" id="dashboard03"></div>
+	        </div>
+		</div>
+
+		<?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		        <form class="form-inline">
+					<label for="tahun1" style="font-size: large;">Luas daerah IUP berdasarkan status SK</label>
+		    	</form>
+			</div>
+	        <div class="row">
+	            <div class="col-xs-12 sigbun-chart-container sigbun-chart-container1" id="dashboard04"></div>
+	        </div>
+		</div>
+		<?php } ?>
 
     </div>

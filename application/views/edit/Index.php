@@ -12,6 +12,7 @@
                     <option value="lahankebun">Lahan Perkebunan</option>
                     <option value="komoditi">Komoditi</option>
                     <option value="opt">Organisme Pengganggu Tanaman</option>
+                    <option value="pengamatan">Pengamatan Organisme Pengganggu Tanaman</option>
                 </select>
             </div>
             <a id="btnEditMulai" class="btn btn-primary">Mulai edit</a>

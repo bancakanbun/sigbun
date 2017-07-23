@@ -15,11 +15,21 @@ class Dashboard extends CI_Controller {
 		$data['tahun'] = $this->Dashboard_model->DaftarTahun();
 		$datachart['kota'] = $this->Dashboard_model->DaftarKota();
 		$datachart['max_tahun'] = $this->Dashboard_model->GetMaxTahunOptData();
-		// $datachart['content'] = $this->Dashboard_model->SeranganOpt('2016');
-		// $datachart['content2'] = $this->Dashboard_model->SeranganOptRugi('2016');
+
+		$this->LoadIupData($datachart);
+
 		$data['custom_js_data'] = $datachart;
 
 		$this->load->view('master',$data);
+	}
+
+	private function LoadIupData(&$datachart) 
+	{
+		$this->load->model('Admin_model'); 
+		$url = $this->Admin_model->LoadWfs();
+		// $url = "http://103.253.107.103:8088/geoserver/disbun/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=disbun:ZD_IjinUsahaPerkebunan_AR&outputformat=json";
+		$json = file_get_contents($url);
+		$datachart['iup_data'] = $json;
 	}
 
 	public function GetSeranganOptLuas($tahun)

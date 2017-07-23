@@ -1,5 +1,5 @@
 <div class="container sigbun-container">
-    <h2>Daftar Kecamatan/Desa</h2>
+    <h2>Lahan perkebunan</h2>
 
     <table id="data" class="table table-striped table-bordered table-condensed" width="100%" cellspacing="0">
         <thead>

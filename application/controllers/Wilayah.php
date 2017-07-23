@@ -26,4 +26,28 @@ class Wilayah extends CI_Controller {
 		$this->Wilayah_model->DeleteData($kodewilayah);
 	}
 
+	public function GetKotaByKomoditi($komoditi) {
+		$this->load->model('Wilayah_model'); 
+		$data = $this->Wilayah_model->GetKotaByKomoditi($komoditi);
+
+		$data = json_encode($data->result());
+		echo $data;
+	}
+
+	public function GetDesaByKomoditiAndKota($komoditi,$kota) {
+		$this->load->model('Wilayah_model'); 
+		$data = $this->Wilayah_model->GetDesaByKomoditiAndKota($komoditi,$kota);
+
+		$data = json_encode($data->result());
+		echo $data;
+	}
+
+	public function GetWilayah($komoditi,$desa) {
+		$this->load->model('Wilayah_model'); 
+		$data = $this->Wilayah_model->GetWilayah($komoditi,$desa);
+
+		$data = json_encode($data->result());
+		echo $data;
+	}
+
 }
