@@ -63,6 +63,20 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 		        <form class="form-inline">
+					<label for="tahun3" style="font-size: large;">Jumlah permohonan SP2BKS</label>
+			        <select class="form-control input-sm pull-right" id="tahun5">
+						<option value="">[ Pilih Tahun ]</option>
+					</select>
+		    	</form>
+			</div>
+	        <div class="row">
+	            <div class="col-xs-12 sigbun-chart-container sigbun-chart-container1" id="dashboard07"></div>
+	        </div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		        <form class="form-inline">
 					<label for="tahun3" style="font-size: large;">Grafik produksi perusahaan (inti) per tahun</label>
 			        <select class="form-control input-sm pull-right" id="tahun3">
 						<option value="">[ Pilih Tahun ]</option>

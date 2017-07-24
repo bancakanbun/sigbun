@@ -1,10 +1,13 @@
+var sipkebun_data = $.parseJSON('<?php echo $sipkebun_data; ?>');
+var sp2bks = $.parseJSON('<?php echo $sp2bks; ?>');
+
 var maxtahun = "<?php echo $max_tahun; ?>";
 var kota = [<?php foreach ($kota->result() as $row) { echo "'".$row->nm_kota."',"; } ?>];
-var sipkebun_data = $.parseJSON('<?php echo $sipkebun_data; ?>');
 var bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 var tema = ["PKE","CPKO","CPO","KERNEL","TBS"];
+var kelompok = ["PERORANGAN","PERUSAHAAN","KELOMPOK TANI"];
 
-function GenerateSeriesData(source,name_field,data_field)
+function GenerateSeriesData(source,name_field,data_field,show_in_legend)
 {
     var tmp = {};
     var key = "";
@@ -22,7 +25,7 @@ function GenerateSeriesData(source,name_field,data_field)
         data.push((val[data_field]!=0)?parseInt(val[data_field]):null);
     });
 
-    target.push({name: key, data: data});
+    target.push({name: key, data: data, showInLegend:show_in_legend});
 
     return target;
 }
@@ -54,18 +57,18 @@ function TahunChange() {
         type: "GET",
         url: url,
         success: function (msg) {
-            console.log(msg);
-            var data = GenerateSeriesData($.parseJSON(msg),name_field,data_field);
+            var data = GenerateSeriesData($.parseJSON(msg),name_field,data_field,true);
 
             if(chart.series.length > 0) while(chart.series.length > 0) chart.series[0].remove(true);
 
             jQuery.each(data, function(i, val) { chart.addSeries(val,false); });
+            chart.series[0].showInLegend = false;
             chart.redraw();
             chart.hideLoading();
         },
         error: function (xhr, status, error) {
             alert("Error while loading data!");
-            console.log(error);
+            console.log(xhr);
         }
     });
 }
@@ -140,7 +143,7 @@ function LoadDashboardIup() {
         });
     });
 
-    var data3 = GenerateSeriesData(data3,"nm_tanaman","luas_area");
+    var data3 = GenerateSeriesData(data3,"nm_tanaman","luas_area",true);
     dashboard03.xAxis[0].setCategories(kota);
     if(dashboard03.series.length > 0) while(dashboard03.series.length > 0) dashboard03.series[0].remove(true);
     jQuery.each(data3, function(i, val) { dashboard03.addSeries(val,false); });
@@ -148,7 +151,7 @@ function LoadDashboardIup() {
     dashboard03.hideLoading();    
 
     <?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
-    var data4 = GenerateSeriesData(data4,"nm_tanaman","luas_area");
+    var data4 = GenerateSeriesData(data4,"nm_tanaman","luas_area",true);
     dashboard04.xAxis[0].setCategories(status);
     if(dashboard04.series.length > 0) while(dashboard04.series.length > 0) dashboard04.series[0].remove(true);
     jQuery.each(data4, function(i, val) { dashboard04.addSeries(val,false); });
@@ -234,7 +237,74 @@ function LoadSipKebun(tahun_aktif,id_dashboard) {
             });
         });
 
-        var data3 = GenerateSeriesData(data3,"nm_tema","produksi");
+        var data3 = GenerateSeriesData(data3,"nm_tema","produksi",true);
+        if(dashboard.series.length > 0) while(dashboard.series.length > 0) dashboard.series[0].remove(true);
+        jQuery.each(data3, function(i, val) { dashboard.addSeries(val,false); });
+        dashboard.redraw();
+        dashboard.hideLoading();    
+    }
+    <?php } ?>
+}
+
+function Tahun3Change() {
+    load_sp2bks($(this).val());
+}
+
+function load_sp2bks(tahun_aktif) {
+    var tahun = {};
+    var chart3 = {};
+    var id_dashboard = "dashboard07";
+    var group = "Jumlah Pemohon"
+    
+    <?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
+    if(tahun_aktif!="") {
+        var dashboard = $('#' + id_dashboard).highcharts();
+        dashboard.showLoading();
+    }
+    <?php } ?>
+
+    chart3[group] = {};
+    jQuery.each(sp2bks.data, function(i, val) { 
+        var thn = val["tahun"];
+        if (!(thn === null)) {
+            if (!(thn in tahun)) { tahun[thn] = "tahun"; }
+
+            if(thn == tahun_aktif) {
+                var kel = val["level"].toUpperCase();
+                if(!(kel in chart3[group])) chart3[group][kel] = 0;
+                var init_val = val["jml_pemohon"];
+                init_val = (init_val===null) ? 0 : parseInt(init_val);
+                chart3[group][kel] += init_val;
+            }
+        } 
+    });
+
+    if(tahun_aktif=="") {
+        tahun = Object.keys(tahun);
+        max_tahun = 0;
+        
+        $("#tahun5").empty()
+        $.each(tahun,function(key, val) {
+            $("#tahun5").append('<option value="' + val + '">' + val + '</option>');
+            if(max_tahun < val) max_tahun = val;
+        });
+
+        $( "#tahun5" ).val(maxtahun).change();
+    }
+
+    <?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
+    data3 = [];
+    if(tahun_aktif!="") {
+        jQuery.each(kelompok, function(i, k) { 
+            if(!(k in chart3[group])) chart3[group][k] = 0.0; 
+            var o = new Object(); 
+            o.nm_level = k;
+            o.nm_tema = group;
+            o.jumlah = chart3[group][k];
+            data3.push(o);
+        });
+
+        var data3 = GenerateSeriesData(data3,"nm_tema","jumlah",false);
         if(dashboard.series.length > 0) while(dashboard.series.length > 0) dashboard.series[0].remove(true);
         jQuery.each(data3, function(i, val) { dashboard.addSeries(val,false); });
         dashboard.redraw();
@@ -250,6 +320,7 @@ function InitiateStackedChart(id,xlabel,ytitle,series_data) {
         xAxis: { categories: xlabel },
         yAxis: {
             min: 0,
+            allowDecimals: false,
             title: { text: ytitle },
             stackLabels: {
                 enabled: true,
@@ -295,6 +366,7 @@ InitiateStackedChart('dashboard02',kota,'Total rugi (Rp)',[]);
 InitiateStackedChart('dashboard04',[],'Luas daerah (ha)',[]);
 InitiateStackedChart('dashboard05',bulan,'Jumlah produksi (ton)',[]);
 InitiateStackedChart('dashboard06',bulan,'Jumlah produksi (ton)',[]);
+InitiateStackedChart('dashboard07',kelompok,'Jumlah',[]);
 <?php } ?>
 
 
@@ -308,8 +380,11 @@ $(document).ready(function(){
 
     $( "#tahun3" ).change(Tahun2Change);
     $( "#tahun4" ).change(Tahun2Change);
+
+    $( "#tahun5" ).change(Tahun3Change);
     <?php } ?>
 
     LoadDashboardIup();
     LoadSipKebun("","");
+    load_sp2bks("");
 });

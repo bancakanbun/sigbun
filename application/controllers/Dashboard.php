@@ -18,6 +18,7 @@ class Dashboard extends CI_Controller {
 
 		$this->LoadIupData($datachart);
 		$this->LoadSipKebunData($datachart);
+		$this->LoadSp2bks($datachart);
 
 		$data['custom_js_data'] = $datachart;
 
@@ -36,6 +37,12 @@ class Dashboard extends CI_Controller {
 		$url = "http://sipkebun.kaltimprov.go.id/index.php/webjson/tabel/tb_produksi";
 		$json = file_get_contents($url);
 		$datachart['sipkebun_data'] = $json;
+	}
+
+	private function LoadSp2bks(&$datachart) {
+		$url = "http://sp2bks.kaltimprov.go.id/baru/json/jumlah_permohonan/9e4b2c87c10c30fa31706d4de171bd60/2017";
+		$json = file_get_contents($url);
+		$datachart['sp2bks'] = $json;
 	}
 
 	public function GetSeranganOptLuas($tahun)
