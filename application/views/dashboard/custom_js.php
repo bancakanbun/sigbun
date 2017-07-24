@@ -103,7 +103,8 @@ function LoadDashboardIup() {
         var namakomoditi = val["properties"]["jnskbn"];
         if (!(namakomoditi in komoditi)) { komoditi[namakomoditi] = "a"; }
 
-        var luas = parseFloat(val["properties"]["shape_area"]);
+        var luas = val["properties"]["shape_area"];
+        luas = (luas === null) ? 0 : parseFloat(luas/10000);
         
         if(!(namakomoditi in chart3)) chart3[namakomoditi] = {};
         if(!(namakota in chart3[namakomoditi])) chart3[namakomoditi][namakota] = 0.0;
