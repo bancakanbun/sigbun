@@ -17,6 +17,7 @@ class Dashboard extends CI_Controller {
 		$datachart['max_tahun'] = $this->Dashboard_model->GetMaxTahunOptData();
 
 		$this->LoadIupData($datachart);
+		$this->LoadSipKebunData($datachart);
 
 		$data['custom_js_data'] = $datachart;
 
@@ -27,9 +28,14 @@ class Dashboard extends CI_Controller {
 	{
 		$this->load->model('Admin_model'); 
 		$url = $this->Admin_model->LoadWfs();
-		// $url = "http://103.253.107.103:8088/geoserver/disbun/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=disbun:ZD_IjinUsahaPerkebunan_AR&outputformat=json";
 		$json = file_get_contents($url);
 		$datachart['iup_data'] = $json;
+	}
+
+	private function LoadSipKebunData(&$datachart) {
+		$url = "http://sipkebun.kaltimprov.go.id/index.php/webjson/tabel/tb_produksi";
+		$json = file_get_contents($url);
+		$datachart['sipkebun_data'] = $json;
 	}
 
 	public function GetSeranganOptLuas($tahun)

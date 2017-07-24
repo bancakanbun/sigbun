@@ -59,6 +59,34 @@
 	            <div class="col-xs-12 sigbun-chart-container sigbun-chart-container1" id="dashboard04"></div>
 	        </div>
 		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		        <form class="form-inline">
+					<label for="tahun3" style="font-size: large;">Grafik produksi perusahaan (inti) per tahun</label>
+			        <select class="form-control input-sm pull-right" id="tahun3">
+						<option value="">[ Pilih Tahun ]</option>
+					</select>
+		    	</form>
+			</div>
+	        <div class="row">
+	            <div class="col-xs-12 sigbun-chart-container sigbun-chart-container1" id="dashboard05"></div>
+	        </div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		        <form class="form-inline">
+					<label for="tahun4" style="font-size: large;">Grafik produksi perusahaan (plasma) per tahun</label>
+			        <select class="form-control input-sm pull-right" id="tahun4">
+						<option value="">[ Pilih Tahun ]</option>
+					</select>
+		    	</form>
+			</div>
+	        <div class="row">
+	            <div class="col-xs-12 sigbun-chart-container sigbun-chart-container1" id="dashboard06"></div>
+	        </div>
+		</div>
 		<?php } ?>
 
     </div>

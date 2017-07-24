@@ -1,5 +1,8 @@
 var maxtahun = "<?php echo $max_tahun; ?>";
 var kota = [<?php foreach ($kota->result() as $row) { echo "'".$row->nm_kota."',"; } ?>];
+var sipkebun_data = $.parseJSON('<?php echo $sipkebun_data; ?>');
+var bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+var tema = ["PKE","CPKO","CPO","KERNEL","TBS"];
 
 function GenerateSeriesData(source,name_field,data_field)
 {
@@ -51,6 +54,7 @@ function TahunChange() {
         type: "GET",
         url: url,
         success: function (msg) {
+            console.log(msg);
             var data = GenerateSeriesData($.parseJSON(msg),name_field,data_field);
 
             if(chart.series.length > 0) while(chart.series.length > 0) chart.series[0].remove(true);
@@ -153,6 +157,92 @@ function LoadDashboardIup() {
     <?php } ?>
 }
 
+function Tahun2Change() {
+    var id = $(this).attr("id");
+    var tahun = $(this).val();
+
+    if(id == "tahun3") LoadSipKebun(tahun,"dashboard05");
+    if(id == "tahun4") LoadSipKebun(tahun,"dashboard06");
+}
+
+function LoadSipKebun(tahun_aktif,id_dashboard) {
+    var tahun = {};
+    var chart3 = {};
+    var field = "";
+    if (id_dashboard == "dashboard05") field = "inti_";
+    if (id_dashboard == "dashboard06") field = "plasma_";
+    
+    <?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
+    if(tahun_aktif!="") {
+        var dashboard = $('#' + id_dashboard).highcharts();
+        dashboard.showLoading();
+    }
+    <?php } ?>
+
+    jQuery.each(sipkebun_data, function(i, val) { 
+        jQuery.each(tema, function(i,val2) {
+            var thn = val["tahun"];
+            if (!(thn === null)) {
+                if (!(thn in tahun)) { tahun[thn] = "tahun"; }
+
+                if(thn == tahun_aktif) {
+                    var bln = val["bulan"];
+                    if( !(bln===null) ) {
+                        if(!(val2 in chart3)) chart3[val2] = {};
+                        if(!(bulan[bln-1] in chart3[val2])) chart3[val2][bulan[bln-1]] = 0;
+                        var init_val = val[field+val2.toLowerCase()];
+                        init_val = (init_val===null) ? 0 : parseInt(init_val);
+                        chart3[val2][bulan[bln-1]] += init_val;
+                    }
+                }
+            } 
+        });
+
+    });
+
+    if(tahun_aktif=="") {
+        tahun = Object.keys(tahun);
+        max_tahun = 0;
+        
+        $("#tahun3").empty()
+        $.each(tahun,function(key, val) {
+            $("#tahun3").append('<option value="' + val + '">' + val + '</option>');
+            if(max_tahun < val) max_tahun = val;
+        });
+
+        $("#tahun4").empty()
+        $.each(tahun,function(key, val) {
+            $("#tahun4").append('<option value="' + val + '">' + val + '</option>');
+        });
+
+        $( "#tahun3" ).val(maxtahun).change();
+        $( "#tahun4" ).val(maxtahun).change();
+    }
+
+    <?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
+    data3 = [];
+    if(tahun_aktif!="") {
+        jQuery.each(tema, function(i, tem) { 
+            if(!(tem in chart3)) chart3[tem] = {};
+            jQuery.each(bulan, function(i, k) { 
+                if(!(k in chart3[tem])) chart3[tem][k] = 0.0; 
+                var o = new Object(); 
+                o.nm_bulan = k;
+                o.nm_tema = tem;
+                o.produksi = chart3[tem][k];
+                data3.push(o);
+            });
+        });
+
+        var data3 = GenerateSeriesData(data3,"nm_tema","produksi");
+        if(dashboard.series.length > 0) while(dashboard.series.length > 0) dashboard.series[0].remove(true);
+        jQuery.each(data3, function(i, val) { dashboard.addSeries(val,false); });
+        dashboard.redraw();
+        dashboard.hideLoading();    
+    }
+    <?php } ?>
+}
+
 function InitiateStackedChart(id,xlabel,ytitle,series_data) {
     Highcharts.chart(id, {
         chart: { type: 'column' },
@@ -203,6 +293,8 @@ InitiateStackedChart('dashboard03',[],'Luas daerah (ha)',[]);
 <?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
 InitiateStackedChart('dashboard02',kota,'Total rugi (Rp)',[]);
 InitiateStackedChart('dashboard04',[],'Luas daerah (ha)',[]);
+InitiateStackedChart('dashboard05',bulan,'Jumlah produksi (ton)',[]);
+InitiateStackedChart('dashboard06',bulan,'Jumlah produksi (ton)',[]);
 <?php } ?>
 
 
@@ -213,7 +305,11 @@ $(document).ready(function(){
     <?php if( CheckAksesGroup(["Administrator","Operator","Eksekutif"]) ) { ?>
     $( "#tahun2" ).change(TahunChange);
     $( "#tahun2" ).val(maxtahun).change();
+
+    $( "#tahun3" ).change(Tahun2Change);
+    $( "#tahun4" ).change(Tahun2Change);
     <?php } ?>
 
     LoadDashboardIup();
+    LoadSipKebun("","");
 });
