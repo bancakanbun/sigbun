@@ -1,4 +1,4 @@
-    <div class="container">
+    <div class="container-fluid">
         <div class="login-box">
             <form>
                 <div class="alert alert-danger" role="alert" style="display:none">

@@ -1,4 +1,4 @@
-  <div class="container sigbun-container">
+  <div class="container-fluid sigbun-container">
     <h2>Update data pengamatan OPT</h2>
 
     <input type="hidden" id="kode" value=""></input>

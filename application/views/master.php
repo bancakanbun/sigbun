@@ -61,7 +61,7 @@
                 <a href="#">Registrasi</a> | 
                 <a href="<?php echo site_url('akun/login'); ?>">Login</a>
                 <?php } else { ?>
-                Selamat datang, <?php echo $user["name"]; ?> | 
+                Selamat datang, <strong><?php echo $user["name"]; ?></strong> | 
                 <a href="<?php echo site_url('akun/logout'); ?>">Logout</a>
                 <?php } ?>
               </div>
@@ -103,6 +103,44 @@
           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><br>Update data</a>
         <?php } ?>
       </div>          
+    </div>
+    <!-- Mobile menu -->
+    <div class="dropdown" id="leftmenumobile">
+      <?php if(!$user) { ?>
+      <a class="btn btn-default pull-right btn-sm" href="<?php echo site_url('akun/login'); ?>" role="button">Login</a>
+      <?php } else { ?>
+
+      <p class="pull-right" style="margin-top:5px;">Selamat datang, <strong><?php echo $user["name"]; ?></strong></p>
+      <?php } ?>
+
+      <button class="btn btn-info btn-sm" type="button" data-toggle="dropdown" data-target="#leftmenu2" aria-expanded="true" aria-haspopup="true">
+        MENU <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="<?php echo site_url('peta'); ?>">
+          <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;&nbsp;Peta</a></li>
+        <li><a href="<?php echo site_url('dashboard'); ?>">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;&nbsp;Dashboard</a></li>
+        <li><a href="<?php echo site_url('pelaporan'); ?>">
+          <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Pelaporan</a></li>
+        <?php if( CheckAksesGroup(["Administrator"]) ) { ?>
+        <li><a href="<?php echo site_url('administrasi'); ?>">
+          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;&nbsp;Administrasi</a></li>
+        <?php } ?>
+        <?php if( CheckAksesGroup(["Administrator","Operator"]) ) { ?>
+        <li><a href="<?php echo site_url('edit'); ?>">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;&nbsp;Update data</a></li>
+        <?php } ?>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;&nbsp;Tentang aplikasi</a></li>
+        <li><a href="#">
+          <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>&nbsp;&nbsp;Bantuan</a></li>
+        <?php if($user) { ?>
+        <li><a href="<?php echo site_url('akun/logout'); ?>">
+          <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;Logout</a></li>
+        <?php } ?>
+      </ul>
     </div>
     <?php } ?>
 

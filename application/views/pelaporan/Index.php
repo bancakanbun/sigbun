@@ -1,4 +1,4 @@
-    <div class="container sigbun-container">
+    <div class="container-fluid sigbun-container">
         <h2>Pelaporan</h2>
 
         <div class="list-group">

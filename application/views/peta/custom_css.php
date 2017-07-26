@@ -1,4 +1,4 @@
 <style type="text/css">
-	.leaflet-left { left: 100px; }
+	@media (min-width: 641px) { .leaflet-left { left: 100px; } 
 	.leaflet-top { top: -5px; }
 </style>

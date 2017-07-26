@@ -1,4 +1,4 @@
-    <div class="container sigbun-container">
+    <div class="container-fluid sigbun-container">
         <h2>Dashboard</h2>
 
 		<div class="panel panel-default">

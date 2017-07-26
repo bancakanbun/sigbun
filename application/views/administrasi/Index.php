@@ -1,4 +1,4 @@
-    <div class="container sigbun-container">
+    <div class="container-fluid sigbun-container">
         <h2>Administrasi</h2>
 
         <div class="well" style="max-width: 300px;">

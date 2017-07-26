@@ -1,4 +1,4 @@
-<div class="container sigbun-container">
+<div class="container-fluid sigbun-container">
     <h2>Tahun</h2>
 
     <table id="data" class="table table-striped table-bordered table-condensed" width="100%" cellspacing="0">

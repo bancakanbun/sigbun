@@ -1,4 +1,4 @@
-    <div class="container sigbun-container">
+    <div class="container-fluid sigbun-container">
         <h2>Update Data</h2>
 
         <form>
