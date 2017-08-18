@@ -350,7 +350,8 @@ function InitiateStackedChart(id,xlabel,ytitle,series_data) {
                 stacking: 'normal',
                 dataLabels: {
                     enabled: true,
-                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                    color: 'black',
+                    style: { textOutline: false }
                 }
             }
         }

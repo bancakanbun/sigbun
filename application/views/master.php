@@ -61,8 +61,17 @@
                 <a href="#">Registrasi</a> | 
                 <a href="<?php echo site_url('akun/login'); ?>">Login</a>
                 <?php } else { ?>
-                Selamat datang, <strong><?php echo $user["name"]; ?></strong> | 
-                <a href="<?php echo site_url('akun/logout'); ?>">Logout</a>
+                <div class="dropdown">
+                  <a id="dLabel" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Selamat datang, <strong><?php echo $user["name"]; ?></strong>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li><a href="<?php echo site_url('akun/ubahpassword'); ?>">Ubah password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?php echo site_url('akun/logout'); ?>">Logout</a></li>
+                  </ul>
+                </div>
                 <?php } ?>
               </div>
             </div>
@@ -137,6 +146,10 @@
         <li><a href="#">
           <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>&nbsp;&nbsp;Bantuan</a></li>
         <?php if($user) { ?>
+        <li role="separator" class="divider"></li>
+        <li><a href="<?php echo site_url('akun/ubahpassword'); ?>">
+          <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>&nbsp;&nbsp;Ubah password</a></li>
+        <li role="separator" class="divider"></li>
         <li><a href="<?php echo site_url('akun/logout'); ?>">
           <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;Logout</a></li>
         <?php } ?>

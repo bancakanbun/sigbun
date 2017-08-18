@@ -8,6 +8,9 @@
                 <th>Username</th>
                 <th>Akses</th>
                 <th>Kota</th>
+                <th>Telp</th>
+                <th>Email</th>
+                <th>Status</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -18,17 +21,31 @@
                 <td><?php echo $row->username; ?></td>
                 <td><?php echo $row->type; ?></td>
                 <td><?php echo $row->nm_kota; ?></td>
+                <td><?php echo $row->telp; ?></td>
+                <td><?php echo $row->email; ?></td>
+                <?php if($row->status == 1) { ?>
+                <td>Disetujui</td>
+                <?php } else { ?>
+                <td>Belum disetujui</td>
+                <?php } ?>
                 <td>
-                    <button type="button" class="btn btn-default btn-xs" 
+                    <button type="button" class="btn btn-default btn-xs" title="Update user"
                         data-toggle="modal" data-target="#frmDetailUser"
                         data-kode="<?php echo $row->id; ?>" data-nama="<?php echo $row->name; ?>"
                         data-user="<?php echo $row->username; ?>" data-pass="<?php echo $row->Pass; ?>"
-                         data-type="<?php echo $row->type; ?>"data-kota="<?php echo $row->id_kota; ?>">
+                        data-telp="<?php echo $row->telp; ?>" data-email="<?php echo $row->email; ?>"
+                        data-type="<?php echo $row->type; ?>" data-status="<?php echo $row->status; ?>" 
+                        data-kota="<?php echo $row->id_kota; ?>">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-default btn-xs btnDelete" data-kode="<?php echo $row->id; ?>">
+                    <button type="button" class="btn btn-default btn-xs btnDelete" title="Hapus user" data-kode="<?php echo $row->id; ?>">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </button>
+                    <?php if($row->status == 0) { ?>
+                    <button type="button" class="btn btn-default btn-xs btnApprove" title="Approve user" data-kode="<?php echo $row->id; ?>">
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                    <?php } ?>
                 </td>
             </tr>
         <?php } ?>
@@ -84,6 +101,16 @@
                   <option value="<?php echo $row->id_kota; ?>"><?php echo $row->nm_kota; ?></option>
                   <?php } ?>
               </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="recipient-name" class="control-label">Telp:</label>
+              <input type="text" class="form-control" id="telp">
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="recipient-name" class="control-label">Email:</label>
+              <input type="text" class="form-control" id="email">
             </div>
           </div>
         </form>

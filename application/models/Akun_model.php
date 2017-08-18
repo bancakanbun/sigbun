@@ -21,7 +21,7 @@ class Akun_model extends CI_Model {
 
     public function LoadAll() {
         $this->LoadDatabase();
-        $this->db->select('id,name,username,Pass,type,m_user.id_kota,nm_kota');
+        $this->db->select('id,name,username,Pass,type,m_user.id_kota,nm_kota,telp,email,status');
         $this->db->from('m_user');
         $this->db->join('m_kota', 'm_user.id_kota = m_kota.id_kota', 'left');
         $query = $this->db->get();
@@ -30,17 +30,17 @@ class Akun_model extends CI_Model {
         return $query;
     }
 
-    public function NewData($nama,$username,$password,$level,$kodekota) {
+    public function NewData($nama,$username,$password,$level,$kodekota,$telp,$email) {
         $this->LoadDatabase();
         $data = array('name' => $nama, 'username' => $username, '"Pass"' => $this->EncryptPassword($password)
-                    , 'type' => $level, 'id_kota' => $kodekota);
+                    , 'type' => $level, 'id_kota' => $kodekota, 'telp' => $telp, 'email' => $email, 'status' => 0);
         $this->db->insert('m_user', $data);
         $this->CloseDatabase();
     }
 
-    public function UpdateData($kode,$nama,$username,$level,$kodekota) {
+    public function UpdateData($kode,$nama,$username,$level,$kodekota,$telp,$email) {
         $this->LoadDatabase();
-        $data = array('name' => $nama, 'username' => $username, 'type' => $level, 'id_kota' => $kodekota);
+        $data = array('name' => $nama, 'username' => $username, 'type' => $level, 'id_kota' => $kodekota, 'telp' => $telp, 'email' => $email);
         $this->db->where('id',$kode);
         $this->db->update('m_user', $data);
         $this->CloseDatabase();
@@ -55,7 +55,7 @@ class Akun_model extends CI_Model {
 
     public function GetUser($username,$password) {
         $this->LoadDatabase();
-        $this->db->select('id,name,username,type,m_user.id_kota,nm_kota');
+        $this->db->select('id,name,username,type,m_user.id_kota,nm_kota,telp,email');
         $this->db->from('m_user');
         $this->db->join('m_kota', 'm_user.id_kota = m_kota.id_kota', 'left');
         $this->db->where('username',$username);
@@ -63,6 +63,22 @@ class Akun_model extends CI_Model {
         $query = $this->db->get();
 
         return $query->row();
+    }
+
+    public function ApproveUser($kode) {
+        $this->LoadDatabase();
+        $data = array('status' => 1);
+        $this->db->where('id',$kode);
+        $this->db->update('m_user', $data);
+        $this->CloseDatabase();
+    }
+
+    public function UpdatePassword($username,$password) {
+        $this->LoadDatabase();
+        $data = array('"Pass"' => $this->EncryptPassword($password));
+        $this->db->where('username',$username);
+        $this->db->update('m_user', $data);
+        $this->CloseDatabase();
     }
 
 } 
