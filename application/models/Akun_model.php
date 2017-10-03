@@ -81,5 +81,23 @@ class Akun_model extends CI_Model {
         $this->CloseDatabase();
     }
 
+    public function RegisterUserActivity($username,$activity) {
+        $this->load->helper('date');
+        $this->LoadDatabase();
+        $data = array('username' => $username, 'activity' => $activity, 'activity_time' => 'now()');
+        $this->db->insert('m_userlog', $data);
+        $this->CloseDatabase();
+    }
+
+    public function GetUserActivities() {
+        $this->LoadDatabase();
+        $this->db->select('username,activity,activity_time');
+        $this->db->from('m_userlog');
+        $query = $this->db->get();
+        $this->CloseDatabase();
+
+        return $query;
+    }
+
 } 
 ?> 

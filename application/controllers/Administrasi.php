@@ -59,4 +59,14 @@ class Administrasi extends CI_Controller {
 		$this->load->model('Admin_model'); 
 		$this->Admin_model->SaveWfs($url);
 	}
+
+
+	public function Log() {
+		$data = $this->InitiateTemplate(false,true,'administrasi/Log','','administrasi/Log_js');
+
+		$this->load->model('Akun_model'); 
+		$data['data'] = $this->Akun_model->GetUserActivities();
+
+		$this->OpenView($data);
+	}
 }

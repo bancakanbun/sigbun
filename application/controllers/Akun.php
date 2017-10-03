@@ -50,11 +50,18 @@ class Akun extends CI_Controller {
 		else if (count($row)==1) {
 			$user = array( "username"=>$row->username,"name"=>$row->name,"type"=>$row->type,"kota"=>$row->nm_kota);
 			$this->session->set_userdata("userinfo",$user);
+			$this->Akun_model->RegisterUserActivity($username,'LOGIN');
 			echo("SUCCESS");
 		}
 	}
 
 	public function Logout() {
+		$user = $this->session->userdata("userinfo");
+		$username = $user["username"];
+
+		$this->load->model('Akun_model');
+		$this->Akun_model->RegisterUserActivity($username,'LOGOUT');
+
 		$this->session->unset_userdata('userinfo');
 		redirect('akun/login');
 	}
