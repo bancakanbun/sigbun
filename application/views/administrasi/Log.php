@@ -9,6 +9,13 @@
                 <th>Waktu</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr>
+                <th>Nama Pengguna</th>
+                <th>Aktivitas</th>
+                <th>Waktu</th>
+            </tr>
+        </tfoot>
         <tbody>
         <?php foreach ($data->result() as $row) { ?>
             <tr>
